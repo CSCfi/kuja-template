@@ -1,0 +1,53 @@
+<div id="maarayksetPage">
+    <h4>YLEISSIVISTÄVIEN TUTKINTOJEN JA KOULUTUKSEN JÄRJESTÄMISLUPA {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} ALKAEN</h4>
+
+
+    <div class="otsikko">1) Kunnat, joissa opetusta järjestetään</div>
+    <div class="sisalto">
+        {% include fromDefault("maaraykset_yleinen") with
+            { "maaraykset": lupa.maaraykset | filterMaarays(["kohde:kunnat"]) }
+        %}
+    </div>
+
+    <div class="otsikko">2) Opetuskieli</div>
+    <div class="sisalto">
+        {% include fromDefault("maaraykset_yleinen") with
+            { "maaraykset": lupa.maaraykset | filterMaarays(["kohde:kielet"]) }
+        %}
+    </div>
+
+    <div class="otsikko">3) Koulutustehtävä</div>
+    <div class="sisalto">
+        {% include fromDefault("maaraykset_yleinen") with
+            { "maaraykset": lupa.maaraykset | filterMaarays(["kohde:koulutustehtava"]) }
+        %}
+    </div>
+
+    <div class="otsikko">4) Erityinen koulutustehtävä</div>
+    <div class="sisalto">
+        {% include fromDefault("maaraykset_yleinen") with
+            { "maaraykset": lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) }
+        %}
+    </div>
+
+    <div class="otsikko">5) Oppilaitokset</div>
+    <div class="sisalto">
+        {% include fromDefault("maaraykset_yleinen") with
+            { "maaraykset": lupa.maaraykset | filterMaarays(["kohde:oppilaitos"]) }
+        %}
+    </div>
+
+    <div class="otsikko">6) Opiskelijamäärät</div>
+    <div class="sisalto">
+        {% include fromDefault("maaraykset_yleinen") with
+            { "maaraykset": lupa.maaraykset | filterMaarays(["kohde:opiskelijamaara"]) }
+        %}
+    </div>
+
+    <div class="otsikko">7) Muut oikeudet, velvollisuudet, ehdot ja tehtävät</div>
+    <div class="sisalto">
+        {% include fromDefault("maaraykset_yleinen") with
+            { "maaraykset": lupa.maaraykset | filterMaarays(["kohde:muut"]) }
+        %}
+    </div>
+</div>

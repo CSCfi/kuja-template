@@ -1,0 +1,24 @@
+<html class="{{ output }}{% if debug %} debug{% endif %}">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ baseUri }}/styles/base.css" />
+    </head>
+    <body>
+        <div>
+            {% if debug %}
+                <a href="/api/pebble/{{ lupa.diaarinumero }}">Normaalinäkymä</a>
+            {% else %}
+                <a href="/api/pebble/{{ lupa.diaarinumero }}?mode=debug">Debug-näkymä</a>
+            {% endif %}
+        </div>
+        <div id="debug-info">
+            {% include "debug" %}
+        </div>
+        <div id="wrapper">
+            <div id="content">
+                {% block header %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

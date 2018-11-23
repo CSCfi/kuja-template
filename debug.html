@@ -1,0 +1,24 @@
+<h2>Debug mode enabled</h2>
+
+<div id="debug-legends">
+
+    <div class="otsikko">Default context variables:</div>
+    <div><b>baseUri:</b> {{ baseUri }}</div>
+    <div><b>contextPath:</b> {{ contextPath }}</div>
+    <div><b>defaultPath:</b> {{ defaultPath }}</div>
+    <div><b>template:</b> {{ template }}.html</div>
+    <div><b>output:</b> {{ output }}</div>
+    <div><b>language:</b> {{ language }}</div>
+    <div><b>state:</b> {{ state }}</div>
+
+    <div class="otsikko">Data</div>
+    <div>
+        <a target="_blank" href="/api/luvat/{{ lupa.diaarinumero }}?with=all">Avaa Luvan tiedot</a>
+    </div>
+
+    <div class="otsikko">Debug mode legends:</div>
+    <span class="data">Data placeholder</span>
+    <br /><span class="if">Conditional-statement such as if-else</span>
+    <br /><span class="loop">Loop-statement such as for</span>
+    <br /><span class="todo">Todo</span>
+</div>

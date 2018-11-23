@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Luvat</title>
+    </head>
+    <style>
+        .links {
+            padding: 10px 0;
+        }
+        table {
+            border: none;
+        }
+        table tr:nth-child(even) {
+            background: #eee
+        }
+        table tr:nth-child(odd) {
+            background: #fff
+        }
+        .header td {
+            font-weight: bold;
+        }
+        td {
+            padding-right: 20px;
+        }
+    </style>
+    <body>
+        <div id="wrapper">
+            <table border="0">
+                <tr class="header">
+                    <td>Diaarinumero</td>
+                    <td>Koulutusmuoto</td>
+                    <td>Järjestäjä</td>
+                </tr>
+                {% for lupa in luvat | sortLupa(["jarjestaja", "diaarinumero"]) %}
+                    <tr>
+                        <td>
+                            <a target="_blank" href="/api/pebble/{{ lupa.diaarinumero }}">{{ lupa.diaarinumero }}</a>
+                        </td>
+                        <td>
+                            {% for maarays in lupa.maaraykset | filterMaarays(["koodisto:koulutusmuoto"]) %}
+                                {{ maarays.koodiArvo | comma }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ lupa.jarjestaja.nimi | translated }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>

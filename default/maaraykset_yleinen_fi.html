@@ -1,0 +1,36 @@
+<div class="if">
+    {% if maaraykset is notBlank %}
+    <div class="maaraykset sisennys">
+        {% for maarays in maaraykset %}
+            {% set hasData = false %}
+            <div class="data loop {{ maarays | htmlClass }}">
+                {% if maarays.koodi.koodiUri is notBlank  %}
+                    <div><b>Koodi:</b> {{ maarays.koodi.nimi | translated }} <span class="monospace">[{{ maarays.koodi.koodiUri }}]</span></div>
+                    {% set hasData = true %}
+                {% elseif maarays.koodisto is notBlank and maarays.koodiArvo is notBlank %}
+                    <div><b>Koodia ei löytynyt koodistosta:</b> <span class="monospace">[{{ maarays.koodisto }}_{{maarays.koodiArvo}}]</span></div>
+                    {% set hasData = true %}
+                {% endif %}
+
+                {% if maarays.koodi.arvo is notBlank  %}
+                    <div><b>Arvo:</b> {{ maarays.koodi.arvo }}</div>
+                    {% set hasData = true %}
+                {% endif %}
+
+                {% if maarays.meta is notBlank %}
+                    <div><b>Meta:</b> {{ maarays.meta }}</div>
+                    {% set hasData = true %}
+                {% endif %}
+
+                {% if not hasData %}
+                    <div>-</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="data loop {{ maarays | htmlClass }}">
+            -
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,17 @@
+<div id="diaari-placeholder-left-top">
+    {{ jarjestaja.nimi | translated(language) }}
+</div>
+<div id="diaari-placeholder-left-bottom">
+    {{jarjestaja.ytunnus}}
+</div>
+<div id="diaari-placeholder">
+    PÄÄTÖS
+</div>
+<div id="diaari-placeholder-right-top">
+    OKM/{{ lupa.diaarinumero }}
+</div>
+<div id="diaari-placeholder-right-bottom">
+    {{ lupa.paatospvm | toDate | date("d.M.yyyy") }}
+</div>
+
+<div id="diaari-placeholder-pagecounter">Sivu </div>
