@@ -1,0 +1,9 @@
+<div class="maaraykset sisennys">
+    {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
+        {% if maarays.koodisto == "nuts1" %}
+            <span class="data loop {{ maarays | htmlClass }}">{{ maarays.meta | fieldvalue("urn:oppilaitosmääräys-2") | comma }}</span>
+        {% else %}
+            <span class="data loop {{ maarays | htmlClass }}">{{ maarays.koodi.nimi | translated | comma }}</span>
+        {% endif %}
+    {% endfor %}
+</div>

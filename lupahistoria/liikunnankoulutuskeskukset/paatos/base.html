@@ -1,0 +1,16 @@
+{% extends "base" %}
+
+<!-- TITLE -->
+{% block title %}
+    OKM/{{ lupa.diaarinumero }}
+{% endblock %}
+
+<!-- HEADER -->
+{% block header %}
+    {% include fromDefault("header") %}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+    {% include fromContext("paatos/content_paatos") %}
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="maaraykset sisennys">
+    {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
+        <span class="data loop {{ maarays | htmlClass }}">
+
+        	<div class="todo monospace">[TODO]</div>
+            {{maarays.koodiarvo}}
+            {{ ["6::Esiopetus",
+                "11::Lisäopetus",
+                "13::Lukiokoulutus",
+                "17::Perusopetukseen valmistava opetus",
+                "18:Perusopetus"] | pick(maarays.koodiarvo) | comma }}</span>
+    {% endfor %}
+</div>
