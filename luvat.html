@@ -28,7 +28,9 @@
                 <tr class="header">
                     <td>Diaarinumero</td>
                     <td>Koulutusmuoto</td>
+                    <td>VST tyyppi</td>
                     <td>Järjestäjä</td>
+                    <td>PDF</td>
                 </tr>
                 {% for lupa in luvat | sortLupa(["jarjestaja", "diaarinumero"]) %}
                     <tr>
@@ -40,7 +42,15 @@
                                 {{ maarays.koodiArvo | comma }}
                             {% endfor %}
                         </td>
+                        <td>
+                            {% for maarays in lupa.maaraykset | filterMaarays(["koodisto:vsttyyppi"]) %}
+                            {{ maarays.koodiArvo | comma }}
+                            {% endfor %}
+                        </td>
                         <td>{{ lupa.jarjestaja.nimi | translated }}</td>
+                        <td>
+                            <a href="/api/pebble/resources/liitteet/{{ lupa.meta | fieldvalue('liitetiedosto') }}" target="_blank">{{ lupa.meta | fieldvalue("liitetiedosto") }}</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
