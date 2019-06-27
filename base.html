@@ -4,13 +4,15 @@
         <link rel="stylesheet" href="{{ baseUri }}/styles/base.css" />
     </head>
     <body>
-        <div>
-            {% if debug %}
-                <a href="/api/pebble/{{ lupa.diaarinumero }}">Normaalinäkymä</a>
-            {% else %}
-                <a href="/api/pebble/{{ lupa.diaarinumero }}?mode=debug">Debug-näkymä</a>
-            {% endif %}
-        </div>
+        {% if output == "web" %}
+            <div>
+                {% if debug %}
+                    <a href="/api/pebble/{{ lupa.diaarinumero }}">Normaalinäkymä</a>
+                {% else %}
+                    <a href="/api/pebble/{{ lupa.diaarinumero }}?mode=debug">Debug-näkymä</a>
+                {% endif %}
+            </div>
+        {% endif %}
         <div id="debug-info">
             {% include "debug" %}
         </div>

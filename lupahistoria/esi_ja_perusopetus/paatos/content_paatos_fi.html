@@ -1,0 +1,122 @@
+<div id="maarayksetPage">
+    <h4>YLEISSIVISTÄVIEN TUTKINTOJEN JA KOULUTUKSEN JÄRJESTÄMISLUPA {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} ALKAEN</h4>
+
+    <!-- Opetus, jota lupa koskee -->
+    <div class="if">
+        {% set aOpetustehtavat = lupa.maaraykset | filterMaarays(["koodisto:opetustehtava"]) %}
+        {% if aOpetustehtavat is notBlank %}
+            <div class="otsikko">Opetus, jota lupa koskee</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% include fromContext("maaraykset_opetustehtavat") with
+                            { "maaraykset": aOpetustehtavat }
+                        %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Kunnat, joissa opetusta järjestetään -->
+    <div class="if">
+        {% set aKunnat = lupa.maaraykset | filterMaarays(["koodisto:kunta|nuts1"]) %}
+        {% if aKunnat is notBlank %}
+            <div class="otsikko">Kunnat, joissa opetusta järjestetään</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% include fromContext("maaraykset_kunnat") with
+                            { "maaraykset": aKunnat }
+                        %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Opetuskielet -->
+    <div class="if">
+        {% set aOpetuskielet = lupa.maaraykset | filterMaarays(["koodisto:kieli"]) %}
+        {% if aOpetuskielet is notBlank %}
+            <div class="otsikko">Opetuskielet</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% include fromContext("maaraykset_opetuskielet") with
+                            { "maaraykset": aOpetuskielet }
+                        %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Koulutuksen järjestämismuoto -->
+    <div class="if">
+        {% set aKoulutuksenJarjestajamismuodot = lupa.maaraykset | filterMaarays(["koodisto:kujamuutoikeudetmaarayksetjarajoitukset"]) %}
+        {% if aKoulutuksenJarjestajamismuodot is notBlank %}
+            <div class="otsikko">Opetuksen järjestämismuoto</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% include fromContext("maaraykset_koulutuksen_jarjestamismuodot") with
+                            { "maaraykset": aKoulutuksenJarjestajamismuodot }
+                        %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Erityinen koulutustehtävä -->
+    <div class="if">
+        {% set aKoulutustehtavat = lupa.maaraykset | filterMaarays(["koodisto:erityinenkoulutustehtava"]) %}
+        {% if aOppilasmaarat is notBlank %}
+            <div class="otsikko">Erityinen koulutustehtävä</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        <div class="todo monospace">[TODO]</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <!-- Oppilasmäärä -->
+    <div class="if">
+        {% set aOppilasmaarat = lupa.maaraykset | filterMaarays(["koodisto:koulutussektori"]) %}
+        {% if aOppilasmaarat is notBlank %}
+            <div class="otsikko">Oppilas- / opiskelijamäärä</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% include fromContext("maaraykset_oppilasmaarat") with
+                        { "maaraykset": aOppilasmaarat }
+                        %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Muut ehdot -->
+    <div class="if">
+        {% set aMuut = lupa.maaraykset | filterMaarays(["koodisto:kujamuutoikeudetmaarayksetjarajoitukset"]) %}
+        {% if aMuut is notBlank %}
+            <div class="otsikko">Muut ehdot</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% include fromContext("maaraykset_muut") with
+                        { "maaraykset": aMuut }
+                        %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+</div>

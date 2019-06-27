@@ -1,0 +1,99 @@
+<div id="maarayksetPage">
+    <h4>YLEISSIVISTÄVIEN TUTKINTOJEN JA KOULUTUKSEN JÄRJESTÄMISLUPA {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} ALKAEN</h4>
+
+
+    <!-- Ylläpitäjä ja kotipaikka -->
+    <div class="otsikko">Ylläpitäjä ja kotipaikka</div>
+    <div class="sisalto">
+        <div class="maaraykset sisennys">
+            <div class="data">
+                {{ jarjestaja.nimi | translated(language) }},
+                {% if jarjestaja.kuntaKoodi is notBlank %}
+                    {{ jarjestaja.kuntaKoodi.nimi | translated }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Oppilaitoksen nimi ja sijainti -->
+    <div class="if">
+        {% set aOppilaitoksenNimetjaSijainnit = lupa.maaraykset | filterMaarays(["kohde:oppilaitos"]) %}
+        {% if aOppilaitoksenNimetjaSijainnit is notBlank %}
+            <div class="otsikko">Oppilaitoksen nimi ja sijainti</div>
+            <div class="sisalto sisennys">
+                {% for maarays in aOppilaitoksenNimetjaSijainnit %}
+                    {% set oppilaitos = maarays.organisaatio %}
+                    {{ oppilaitos.nimi | translated(language) }}
+                    {% if oppilaitos.kuntaKoodi is notBlank %}
+                        ,{{ oppilaitos.kuntaKoodi.nimi | translated }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Oppilaitoksen valtakunnallisuus tai alueellisuus/toiminta-alue -->
+    <div class="if">
+        {% set aOppilaitoksenToimintaalueet = lupa.maaraykset | filterMaarays(["koodisto:vstoppilaitoksenalueellisuusjavaltakunnallisuus"]) %}
+        {% if aOppilaitoksenToimintaalueet is notBlank %}
+            <div class="otsikko">Oppilaitoksen valtakunnallisuus tai alueellisuus/toiminta-alue</div>
+            <div class="sisalto">
+                {% for maarays in aOppilaitoksenToimintaalueet %}
+                    {% set alueellisuus = maarays.koodi.nimi | translated %}
+                    {% if alueellisuus is notBlank  %}
+                        <div class="sisennys">
+                            {{ alueellisuus }}
+                        </div>
+                        {% if maarays.koodi.koodiArvo == "2" %}
+                        <div class="sisennys">{{ maarays.meta | fieldvalue("urn:oppilaitosmääräys-1") }}</div>
+                        <div class="sisennys">{{ maarays.meta | fieldvalue("urn:muumääräys-2") }}</div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Opetuskieli -->
+    <div class="if">
+        {% set aOpetuskielet = lupa.maaraykset | filterMaarays(["kohde:kielet"]) %}
+        {% if aOpetuskielet is notBlank %}
+            <div class="otsikko">Opetuskieli</div>
+            <div class="sisalto">
+                {% include fromDefault("maaraykset_opetuskielet") with
+                    { "maaraykset": aOpetuskielet }
+                %}
+            </div>
+        {% endif %}
+    </div>
+
+   <!-- Oppilaitoksen koulutustehtävä -->
+    <div class="if">
+        {% set aOppilaitoksenKoulutustehtavat = lupa.maaraykset | filterMaarays(["kohde:koulutustehtava"]) %}
+        {% if aOppilaitoksenKoulutustehtavat is notBlank %}
+            <div class="otsikko">Oppilaitoksen koulutustehtävä</div>
+            <div class="sisalto">
+                {% include fromDefault("maaraykset_metatieto") with
+                    { "avain": "koulutustehtävämääräys-0",
+                      "maaraykset": aOppilaitoksenKoulutustehtavat
+                    }
+                %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Erityinen koulutustehtävä -->
+    <div class="if">
+        {% set aErityiskoulutustehtavaMaaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
+        {% if aErityiskoulutustehtavaMaaraykset is notBlank %}
+            <div class="otsikko">Erityinen koulutustehtävä</div>
+            <div class="sisalto">
+                {% include fromDefault("maaraykset_metatieto") with
+                    { "avain": "erityinenkoulutustehtävämääräys-2",
+                      "maaraykset": aErityiskoulutustehtavaMaaraykset
+                    }
+                %}
+            </div>
+        {% endif %}
+    </div>
+</div>
