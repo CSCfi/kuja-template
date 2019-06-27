@@ -6,7 +6,7 @@
                     {% set sOppilaitoMaarays = maarays.meta | fieldvalue(avain + "-" + nIndex) %}
                     {% if sOppilaitoMaarays is notBlank  %}
                         <div class="data loop {{ maarays | htmlClass }}">
-                            {{ sOppilaitoMaarays }} <span class="monospace">[META]</span>
+                            {{ sOppilaitoMaarays }}
                         </div>
                     {% endif %}
                 {% endfor %}
