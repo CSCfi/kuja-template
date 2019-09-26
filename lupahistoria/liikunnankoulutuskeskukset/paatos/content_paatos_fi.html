@@ -23,9 +23,11 @@
             <div class="sisalto sisennys">
                 {% for maarays in aOppilaitoksenNimetjaSijainnit %}
                     {% set oppilaitos = maarays.organisaatio %}
-                    {{ oppilaitos.nimi | translated(language) }}{% if oppilaitos.kuntaKoodi is notBlank %},
-                    {{ oppilaitos.kuntaKoodi.nimi | translated }}
-                    {% endif %}
+                    {% set kuntaList = oppilaitos.allKuntaKoodis %}
+                    {{ oppilaitos.nimi | translated(language) }}{% if kuntaList is not empty %}, {% endif %}
+                    {% for kuntaKoodi in kuntaList %}
+                        {{ kuntaKoodi.nimi | translated | comma }}
+                    {% endfor %}
                 {% endfor %}
             </div>
         {% endif %}
