@@ -89,8 +89,8 @@
         {% if aErityiskoulutustehtavaMaaraykset is notBlank %}
             <div class="otsikko">Erityinen koulutustehtävä</div>
             <div class="sisalto">
-                {% include fromDefault("maaraykset_metatieto") with
-                    { "avain": "erityinenkoulutustehtävämääräys-2",
+                {% include fromDefault("maaraykset_metatiedot") with
+                    { "avain": "erityinenkoulutustehtävämääräys",
                       "maaraykset": aErityiskoulutustehtavaMaaraykset
                     }
                 %}
