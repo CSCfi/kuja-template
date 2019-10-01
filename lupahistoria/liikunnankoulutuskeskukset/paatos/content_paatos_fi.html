@@ -15,6 +15,23 @@
         </div>
     </div>
 
+    <!-- Sopimuskunnat -->
+    <div class="if">
+        {% set kunnat = lupa.maaraykset | filterMaarays(["meta:oppilaitosmaarays=Sopimuskunta"]) %}
+        {% if kunnat is notBlank %}
+            <div class="otsikko">Sopimuskunnat</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% for kunta in kunnat %}
+                            {{ kunta.koodi.nimi | translated | comma }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
     <!-- Oppilaitoksen nimi ja sijainti -->
     <div class="if">
         {% set aOppilaitoksenNimetjaSijainnit = lupa.maaraykset | filterMaarays(["kohde:oppilaitos"]) %}
@@ -24,7 +41,7 @@
                 {% for maarays in aOppilaitoksenNimetjaSijainnit %}
                     {% set oppilaitos = maarays.organisaatio %}
                     {% set kuntaList = oppilaitos.allKuntaKoodis %}
-                    {{ oppilaitos.nimi | translated(language) }}{% if kuntaList is not empty %}, {% endif %}
+                    {{ oppilaitos.nimi | translated }}{% if kuntaList is not empty %}, {% endif %}
                     {% for kuntaKoodi in kuntaList %}
                         {{ kuntaKoodi.nimi | translated | comma }}
                     {% endfor %}
