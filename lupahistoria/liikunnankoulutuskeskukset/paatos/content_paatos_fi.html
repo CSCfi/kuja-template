@@ -91,8 +91,8 @@
         {% if aOppilaitoksenKoulutustehtavat is notBlank %}
             <div class="otsikko">Oppilaitoksen koulutustehtävä</div>
             <div class="sisalto">
-                {% include fromDefault("maaraykset_metatieto") with
-                    { "avain": "koulutustehtävämääräys-0",
+                {% include fromDefault("maaraykset_metatiedot") with
+                    { "avain": "koulutustehtävämääräys",
                       "maaraykset": aOppilaitoksenKoulutustehtavat
                     }
                 %}
