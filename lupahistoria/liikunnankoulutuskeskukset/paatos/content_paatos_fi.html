@@ -3,7 +3,7 @@
 
 
     <!-- Ylläpitäjä ja kotipaikka -->
-    <div class="otsikko">Ylläpitäjä ja kotipaikka</div>
+    <div class="otsikko">Ylläpitäjän nimi ja kotipaikka</div>
     <div class="sisalto">
         <div class="maaraykset sisennys">
             <div class="data">
@@ -54,7 +54,7 @@
     <div class="if">
         {% set aOppilaitoksenToimintaalueet = lupa.maaraykset | filterMaarays(["koodisto:vstoppilaitoksenalueellisuusjavaltakunnallisuus"]) %}
         {% if aOppilaitoksenToimintaalueet is notBlank %}
-            <div class="otsikko">Oppilaitoksen valtakunnallisuus tai alueellisuus/toiminta-alue</div>
+            <div class="otsikko">Oppilaitoksen toiminta-alue</div>
             <div class="sisalto">
                 {% for maarays in aOppilaitoksenToimintaalueet %}
                     {% set alueellisuus = maarays.koodi.nimi | translated %}
