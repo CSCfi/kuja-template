@@ -48,19 +48,24 @@
     {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
     {% set count = 0 %}
     {% for maarays in maaraykset %}
-    {% set valtakunnallisuus = maarays.meta | fieldvalue("urn:muumääräys-0") %}
-    {% if  valtakunnallisuus == "Valtakunnallinen kehittämistehtävä" or valtakunnallisuus == "Riksomfattande utvecklingsuppgift" %}
-    {% set count = count + 1 %}
-    {% if count == 1 %}
-    <div class="otsikko">Valtakunnalliset koulutustehtävät</div>
-    {% endif %}
-    <div class="sisalto sisennys">
-        {% set alku = maarays.meta | fieldvalue("urn:aikamääräys-0") %}
-        {% set loppu = maarays.meta | fieldvalue("urn:aikamääräys-1") %}
-        {{ maarays.meta | fieldvalue("erityinenkoulutustehtävämääräys-0") | trim }}{% if alku is notBlank %}, {{ alku }} {% endif %}
-        {% if loppu is notBlank %} - {{ loppu }} {% endif %}
-    </div>
-    {% endif %}
+        {% set valtakunnallisuus = maarays.meta | fieldvalue("urn:muumääräys-0") %}
+        {% if  valtakunnallisuus == "Valtakunnallinen kehittämistehtävä" or valtakunnallisuus == "Riksomfattande utvecklingsuppgift" %}
+        {% set count = count + 1 %}
+        {% if count == 1 %}
+        <div class="otsikko">Valtakunnalliset kehitystehtävät</div>
+        {% endif %}
+        <div class="sisalto sisennys">
+            {% set alku = maarays.meta | fieldvalue("urn:aikamääräys-0") %}
+            {% set loppu = maarays.meta | fieldvalue("urn:aikamääräys-1") %}
+            {% include fromDefault("maarays_metatiedot") with
+            {
+                "avain": "erityinenkoulutustehtävämääräys",
+                "maarays": maarays
+            }
+            %}
+            {% if alku is notBlank %}{{ alku }} {% endif %} {% if loppu is notBlank %} - {{ loppu }} {% endif %}
+        </div>
+        {% endif %}
     {% endfor %}
 
     {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:opiskelijamaara"]) %}
