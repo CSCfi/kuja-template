@@ -1,0 +1,8 @@
+{% for nIndex in 0..10 %}
+    {% set sOppilaitoMaarays = maarays.meta | fieldvalue(avain + "-" + nIndex) %}
+    {% if sOppilaitoMaarays is notBlank  %}
+    <div class="data loop {{ maarays | htmlClass }}">
+        {{ sOppilaitoMaarays }}
+    </div>
+    {% endif %}
+{% endfor %}
