@@ -39,7 +39,7 @@
     <div class="sisalto sisennys">
         {% for maarays in maaraykset %}
             {{ maarays.meta | fieldvalue("erityinenkoulutustehtävämääräys-0") | trim }},
-            {{ maarays.meta | fieldvalue("urn:oppilaitosmääräys-0") }}
+            {{ maarays.organisaatio.nimi | translated }}
             {% if loop.index < maaraykset | length - 1 %}<br/>{% endif %}
         {% endfor %}
     </div>
