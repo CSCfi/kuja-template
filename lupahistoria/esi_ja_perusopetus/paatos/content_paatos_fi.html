@@ -39,7 +39,7 @@
     <div class="if">
         {% set aOpetuskielet = lupa.maaraykset | filterMaarays(["koodisto:kieli"]) %}
         {% if aOpetuskielet is notBlank %}
-            <div class="otsikko">Opetuskielet</div>
+            <div class="otsikko">Opetuskieli</div>
             <div class="sisalto">
                 <div class="maaraykset sisennys">
                     <div class="data">
@@ -52,7 +52,7 @@
         {% endif %}
     </div>
 
-    <!-- Koulutuksen järjestämismuoto -->
+    <!-- Opetuksen järjestämismuoto -->
     <div class="if">
         {% set aKoulutuksenJarjestajamismuodot = lupa.maaraykset | filterMaarays(["koodisto:kujamuutoikeudetmaarayksetjarajoitukset"]) %}
         {% if aKoulutuksenJarjestajamismuodot is notBlank %}
@@ -72,12 +72,17 @@
     <!-- Erityinen koulutustehtävä -->
     <div class="if">
         {% set aKoulutustehtavat = lupa.maaraykset | filterMaarays(["koodisto:erityinenkoulutustehtava"]) %}
-        {% if aOppilasmaarat is notBlank %}
+        {% if aKoulutustehtavat is notBlank %}
             <div class="otsikko">Erityinen koulutustehtävä</div>
             <div class="sisalto">
                 <div class="maaraykset sisennys">
-                    <div class="data">
-                        <div class="todo monospace">[TODO]</div>
+                    <div class="sisalto">
+                        {% include fromDefault("maaraykset_metatiedot") with
+                            {
+                                "avain": "erityinenkoulutustehtävämääräys",
+                                "maaraykset": aKoulutustehtavat
+                            }
+                        %}
                     </div>
                 </div>
             </div>
@@ -106,7 +111,7 @@
     <div class="if">
         {% set aMuut = lupa.maaraykset | filterMaarays(["koodisto:kujamuutoikeudetmaarayksetjarajoitukset"]) %}
         {% if aMuut is notBlank %}
-            <div class="otsikko">Muut ehdot</div>
+            <div class="otsikko">Muut koulutuksen järjestämiseen liittyvät ehdot</div>
             <div class="sisalto">
                 <div class="maaraykset sisennys">
                     <div class="data">
