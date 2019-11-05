@@ -24,7 +24,7 @@
 
     {% set maaraykset = lupa.maaraykset | filterMaarays(["koodisto:koulutuksenjarjestamismuoto"]) %}
     {% if maaraykset is notBlank %}
-    <div class="otsikko">Koulutuksen järjestämismuoto</div>
+    <div class="otsikko">Oikeus sisäoppilaitosmuotoiseen koulutukseen</div>
     <div class="sisalto sisennys">
         {% for maarays in maaraykset %}
             {% set koodi = maarays.koodi %}
@@ -35,7 +35,7 @@
 
     {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
     {% if maaraykset is notBlank %}
-    <div class="otsikko">Erityiset koulutustehtävät</div>
+    <div class="otsikko">Erityinen koulutustehtävä</div>
     <div class="sisalto sisennys">
         {% for maarays in maaraykset %}
             {{ maarays.meta | fieldvalue("erityinenkoulutustehtävämääräys-0") | trim }},
@@ -52,7 +52,7 @@
         {% if  valtakunnallisuus == "Valtakunnallinen kehittämistehtävä" or valtakunnallisuus == "Riksomfattande utvecklingsuppgift" %}
         {% set count = count + 1 %}
         {% if count == 1 %}
-        <div class="otsikko">Valtakunnalliset kehitystehtävät</div>
+        <div class="otsikko">Valtakunnallinen kehittämistehtävä</div>
         {% endif %}
         <div class="sisalto sisennys">
             {% set alku = maarays.meta | fieldvalue("urn:aikamääräys-0") %}
@@ -70,7 +70,7 @@
 
     {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:opiskelijamaara"]) %}
     {% if maaraykset is notBlank %}
-    <div class="otsikko">Opiskelijamäärät</div>
+    <div class="otsikko">Opiskelijamäärä</div>
     <div class="sisalto sisennys">
         {% for maarays in maaraykset %}
         {{ maarays.maaraystyyppi.selite | translated }}: {{ maarays.meta | fieldvalue("oppilaitosmääräys-2") | trim }}, {{ maarays.arvo }}<br/>
@@ -80,7 +80,7 @@
 
     {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:muut"]) %}
     {% if maaraykset is notBlank %}
-    <div class="otsikko">Muut ehdot</div>
+    <div class="otsikko">Muut koulutuksen järjestämiseen liittyvät ehdot</div>
     <div class="sisalto">
         {% include fromDefault("maaraykset_yleinen") with
             { "maaraykset": maaraykset }
