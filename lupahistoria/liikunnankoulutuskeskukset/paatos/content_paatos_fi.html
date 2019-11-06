@@ -120,4 +120,20 @@
             </div>
         {% endif %}
     </div>
+
+    <!-- Muut koulutuksen järjestämiseen liittyvät ehdot -->
+    <div class="if">
+        {% set maaraykset = lupa.maaraykset | filterMaarays(["koodisto:kujamuutoikeudetmaarayksetjarajoitukset"]) %}
+        {% if maaraykset is notBlank %}
+        <div class="otsikko">Muut koulutuksen järjestämiseen liittyvät ehdot</div>
+        <div class="sisalto">
+            {% include fromDefault("maaraykset_metatiedot") with
+                {
+                    "maaraykset": maaraykset,
+                    "avain": "urn:muumääräys"
+                }
+            %}
+        </div>
+        {% endif %}
+    </div>
 </div>
