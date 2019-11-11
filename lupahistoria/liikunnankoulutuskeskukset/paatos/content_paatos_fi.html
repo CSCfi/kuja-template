@@ -1,6 +1,18 @@
 <div id="maarayksetPage">
-    <h4>YLEISSIVISTÄVIEN TUTKINTOJEN JA KOULUTUKSEN JÄRJESTÄMISLUPA {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} ALKAEN</h4>
-
+    {% set vsttyyppi = lupa.maaraykset | filterMaarays(["koodisto:vsttyyppi"]) %}
+    {% for tyyppi in vsttyyppi %}
+        {% if tyyppi.koodiArvo == "1" %}
+        <h4>Kansanopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+        {% elseif tyyppi.koodiArvo == "2" %}
+        <h4>Kansalaisopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+        {% elseif tyyppi.koodiArvo == "3" %}
+        <h4>Opintokeskuksen ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+        {% elseif tyyppi.koodiArvo == "4" %}
+        <h4>Kesäyliopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+        {% else %}
+        <h4>Liikunnan koulutuskeskuksen ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+        {% endif %}
+    {% endfor %}
 
     <!-- Ylläpitäjä ja kotipaikka -->
     <div class="otsikko">Ylläpitäjän nimi ja kotipaikka</div>

@@ -1,5 +1,5 @@
 <div id="maarayksetPage">
-    <h4>YLEISSIVISTÄVIEN TUTKINTOJEN JA KOULUTUKSEN JÄRJESTÄMISLUPA {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} ALKAEN</h4>
+    <h4>Lukiokoulutuksen järjestämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
 
     {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:kunnat"]) %}
     {% if maaraykset is notBlank %}
