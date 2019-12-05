@@ -37,7 +37,7 @@
 
     <!-- Opetuskielet -->
     <div class="if">
-        {% set aOpetuskielet = lupa.maaraykset | filterMaarays(["koodisto:kieli"]) %}
+        {% set aOpetuskielet = lupa.maaraykset | filterMaarays(["kohde:kielet"]) %}
         {% if aOpetuskielet is notBlank %}
             <div class="otsikko">Opetuskieli</div>
             <div class="sisalto">
