@@ -22,6 +22,10 @@
                 {{ jarjestaja.nimi | translated(language) }},
                 {% if jarjestaja.kuntaKoodi is notBlank %}
                     {{ jarjestaja.kuntaKoodi.nimi | translated }}
+                    {% if jarjestaja.oid == '1.2.246.562.10.13451568789' %}
+                    <!-- special case for Jokioisen kunta which has several ylläpitäjä kunta -->
+                    sekä Humppilan ja Ypäjän kunnat
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
