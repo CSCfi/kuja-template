@@ -71,7 +71,7 @@
 
     <!-- Erityinen koulutustehtävä -->
     <div class="if">
-        {% set aKoulutustehtavat = lupa.maaraykset | filterMaarays(["koodisto:erityinenkoulutustehtava"]) %}
+        {% set aKoulutustehtavat = lupa.maaraykset | filterMaarays(["koodisto:vsterityinenkoulutustehtava"]) %}
         {% if aKoulutustehtavat is notBlank %}
             <div class="otsikko">Erityinen koulutustehtävä</div>
             <div class="sisalto">

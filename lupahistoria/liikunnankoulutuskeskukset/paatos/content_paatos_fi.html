@@ -1,6 +1,6 @@
 <div id="maarayksetPage">
-    {% set vsttyyppi = lupa.maaraykset | filterMaarays(["koodisto:vsttyyppi"]) %}
-    {% for tyyppi in vsttyyppi %}
+    {% set vsttyypit = lupa.maaraykset | filterMaarays(["koodisto:vsttyypit"]) %}
+    {% for tyyppi in vsttyypit %}
         {% if tyyppi.koodiArvo == "1" %}
         <h4>Kansanopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
         {% elseif tyyppi.koodiArvo == "2" %}
@@ -124,7 +124,7 @@
 
     <!-- Erityinen koulutustehtävä -->
     <div class="if">
-        {% set aErityiskoulutustehtavaMaaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
+        {% set aErityiskoulutustehtavaMaaraykset = lupa.maaraykset | filterMaarays(["kohde:vsterityinenkoulutustehtava"]) %}
         {% if aErityiskoulutustehtavaMaaraykset is notBlank %}
             <div class="otsikko">Erityinen koulutustehtävä</div>
             <div class="sisalto">
