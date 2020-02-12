@@ -33,7 +33,7 @@
     </div>
     {% endif %}
 
-    {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
+    {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:vsterityinenkoulutustehtava"]) %}
     {% if maaraykset is notBlank %}
     <div class="otsikko">Erityinen koulutustehtävä</div>
     <div class="sisalto sisennys">
@@ -45,7 +45,7 @@
     </div>
     {% endif %}
 
-    {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
+    {% set maaraykset = lupa.maaraykset | filterMaarays(["kohde:vsterityinenkoulutustehtava"]) %}
     {% set count = 0 %}
     {% for maarays in maaraykset %}
         {% set valtakunnallisuus = maarays.meta | fieldvalue("urn:muumääräys-0") %}
