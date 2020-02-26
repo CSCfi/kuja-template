@@ -1,14 +1,23 @@
 <div id="maarayksetPage">
     {% set vsttyypit = lupa.maaraykset | filterMaarays(["koodisto:vsttyypit"]) %}
     {% for tyyppi in vsttyypit %}
+
         {% if tyyppi.koodiArvo == "1" %}
         <h4>Kansanopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
         {% elseif tyyppi.koodiArvo == "2" %}
         <h4>Kansalaisopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
         {% elseif tyyppi.koodiArvo == "3" %}
         <h4>Opintokeskuksen ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
         {% elseif tyyppi.koodiArvo == "4" %}
         <h4>Kesäyliopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
+        {# Snellman-korkeakoulu is a special case and has its own vsttyyppi #}
+        {% elseif tyyppi.koodiArvo == "6" %}
+        <h4>Snellman-korkeakoulun ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
         {% else %}
         <h4>Liikunnan koulutuskeskuksen ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
         {% endif %}
@@ -107,6 +116,21 @@
         {% endif %}
     </div>
 
+    <!-- Oppilaitoksen tarkoitus -->
+    <div class="if">
+        {% set aOppilaitoksenTarkoitus = lupa.maaraykset | filterMaarays(["kohde:tarkoitus"]) %}
+        {% if aOppilaitoksenTarkoitus is notBlank %}
+        <div class="otsikko">Oppilaitoksen tarkoitus</div>
+        <div class="sisalto">
+            {% include fromDefault("maaraykset_metatiedot") with
+              { "avain": "oppilaitoksentarkoitus",
+                "maaraykset": aOppilaitoksenTarkoitus
+              }
+            %}
+        </div>
+        {% endif %}
+    </div>
+
    <!-- Oppilaitoksen koulutustehtävä -->
     <div class="if">
         {% set aOppilaitoksenKoulutustehtavat = lupa.maaraykset | filterMaarays(["kohde:koulutustehtava"]) %}
@@ -124,7 +148,7 @@
 
     <!-- Erityinen koulutustehtävä -->
     <div class="if">
-        {% set aErityiskoulutustehtavaMaaraykset = lupa.maaraykset | filterMaarays(["kohde:vsterityinenkoulutustehtava"]) %}
+        {% set aErityiskoulutustehtavaMaaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
         {% if aErityiskoulutustehtavaMaaraykset is notBlank %}
             <div class="otsikko">Erityinen koulutustehtävä</div>
             <div class="sisalto">
