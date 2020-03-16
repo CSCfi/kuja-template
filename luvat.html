@@ -35,7 +35,7 @@
                 {% for lupa in luvat | sortLupa(["jarjestaja", "diaarinumero"]) %}
                     <tr>
                         <td>
-                            <a target="_blank" href="/api/pebble/{{ lupa.diaarinumero }}">{{ lupa.diaarinumero }}</a>
+                            <a target="_blank" href="/api/pebble/{{ lupa.uuid }}">{{ lupa.diaarinumero }}</a>
                         </td>
                         <td>
                             {% for maarays in lupa.maaraykset | filterMaarays(["koodisto:yleissivistavankoulutusmuodot"]) %}
