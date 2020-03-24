@@ -7,9 +7,9 @@
         {% if output == "web" %}
             <div>
                 {% if debug %}
-                    <a href="/api/pebble/{{ lupa.diaarinumero }}">Normaalinäkymä</a>
+                    <a href="/api/pebble/{{ lupa.uuid }}">Normaalinäkymä</a>
                 {% else %}
-                    <a href="/api/pebble/{{ lupa.diaarinumero }}?mode=debug">Debug-näkymä</a>
+                    <a href="/api/pebble/{{ lupa.uuid }}?mode=debug">Debug-näkymä</a>
                 {% endif %}
             </div>
         {% endif %}
