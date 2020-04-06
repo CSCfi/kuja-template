@@ -1,0 +1,11 @@
+<div class="if">
+    {% if maaraykset is notBlank %}
+        <div class="maaraykset sisennys">
+            {% for maarays in maaraykset %}
+                <div class="data loop {{ maarays | htmlClass }}">
+                    {{ maarays.meta | fieldvalue(avain) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

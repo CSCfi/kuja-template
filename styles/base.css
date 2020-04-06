@@ -137,6 +137,10 @@ body {
     counter-reset: page 1;
 }
 
+#maarayksetPage h4 {
+    text-transform: uppercase;
+}
+
 .sector {
     display: table;
     margin-top: 15px;

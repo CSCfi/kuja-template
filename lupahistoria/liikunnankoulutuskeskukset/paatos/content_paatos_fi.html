@@ -1,0 +1,179 @@
+<div id="maarayksetPage">
+    {% set vsttyypit = lupa.maaraykset | filterMaarays(["koodisto:vsttyypit"]) %}
+    {% for tyyppi in vsttyypit %}
+
+        {% if tyyppi.koodiArvo == "1" %}
+        <h4>Kansanopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
+        {% elseif tyyppi.koodiArvo == "2" %}
+        <h4>Kansalaisopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
+        {% elseif tyyppi.koodiArvo == "3" %}
+        <h4>Opintokeskuksen ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
+        {% elseif tyyppi.koodiArvo == "4" %}
+        <h4>Kesäyliopiston ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
+        {# Snellman-korkeakoulu is a special case and has its own vsttyyppi #}
+        {% elseif tyyppi.koodiArvo == "6" %}
+        <h4>Snellman-korkeakoulun ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+
+        {% else %}
+        <h4>Liikunnan koulutuskeskuksen ylläpitämislupa {{ lupa.alkupvm | toDate | date("d.M.yyyy") }} alkaen</h4>
+        {% endif %}
+    {% endfor %}
+
+    <!-- Ylläpitäjä ja kotipaikka -->
+    <div class="otsikko">Ylläpitäjän nimi ja kotipaikka</div>
+    <div class="sisalto">
+        <div class="maaraykset sisennys">
+            <div class="data">
+                {{ jarjestaja.nimi | translated(language) }},
+                {% if jarjestaja.kuntaKoodi is notBlank %}
+                    {{ jarjestaja.kuntaKoodi.nimi | translated }}
+                    {% if jarjestaja.oid == '1.2.246.562.10.13451568789' %}
+                    <!-- special case for Jokioisen kunta which has several ylläpitäjä kunta -->
+                    sekä Humppilan ja Ypäjän kunnat
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Sopimuskunnat -->
+    <div class="if">
+        {% set kunnat = lupa.maaraykset | filterMaarays(["meta:oppilaitosmaarays=Sopimuskunta"]) %}
+        {% if kunnat is notBlank %}
+            <div class="otsikko">Sopimuskunnat</div>
+            <div class="sisalto">
+                <div class="maaraykset sisennys">
+                    <div class="data">
+                        {% for kunta in kunnat %}
+                            {{ kunta.koodi.nimi | translated | comma }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Oppilaitoksen nimi ja sijainti -->
+    <div class="if">
+        {% set aOppilaitoksenNimetjaSijainnit = lupa.maaraykset | filterMaarays(["kohde:oppilaitos"]) %}
+        {% if aOppilaitoksenNimetjaSijainnit is notBlank %}
+            <div class="otsikko">Oppilaitoksen nimi ja sijainti</div>
+            <div class="sisalto sisennys">
+                {% for maarays in aOppilaitoksenNimetjaSijainnit %}
+                <div class="data">
+                    {% set oppilaitos = maarays.organisaatio %}
+                    {% set kuntaList = oppilaitos.allKuntaKoodis %}
+                    {{ oppilaitos.nimi | translated }}{% if kuntaList is not empty %}, {% endif %}
+                    {% for kuntaKoodi in kuntaList %}
+                        {{ kuntaKoodi.nimi | translated | comma }}
+                    {% endfor %}
+                    <!-- !!Special case!! Because Nordiska Konstskolan som filial can not be found from organisaatiopalvelu -->
+                    {% if lupa.diaarinumero == "27/532/2011" and maarays.organisaatio is empty %}
+                        {{ maarays.meta | fieldvalue("oppilaitosmääräys-0") }}, Kokkola
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Oppilaitoksen valtakunnallisuus tai alueellisuus/toiminta-alue -->
+    <div class="if">
+        {% set aOppilaitoksenToimintaalueet = lupa.maaraykset | filterMaarays(["koodisto:vstoppilaitoksenalueellisuusjavaltakunnallisuus"]) %}
+        {% if aOppilaitoksenToimintaalueet is notBlank %}
+            <div class="otsikko">Oppilaitoksen toiminta-alue</div>
+            <div class="sisalto">
+                {% for maarays in aOppilaitoksenToimintaalueet %}
+                    {% set alueellisuus = maarays.koodi.nimi | translated %}
+                    {% if alueellisuus is notBlank  %}
+                        <div class="sisennys">
+                            {{ alueellisuus }}
+                        </div>
+                        {% if maarays.koodi.koodiArvo == "2" %}
+                        <div class="sisennys">{{ maarays.meta | fieldvalue("urn:oppilaitosmääräys-1") }}</div>
+                        <div class="sisennys">{{ maarays.meta | fieldvalue("urn:muumääräys-2") }}</div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Opetuskieli -->
+    <div class="if">
+        {% set aOpetuskielet = lupa.maaraykset | filterMaarays(["kohde:kielet"]) %}
+        {% if aOpetuskielet is notBlank %}
+            <div class="otsikko">Opetuskieli</div>
+            <div class="sisalto">
+                {% include fromDefault("maaraykset_opetuskielet") with
+                    { "maaraykset": aOpetuskielet }
+                %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Oppilaitoksen tarkoitus -->
+    <div class="if">
+        {% set aOppilaitoksenTarkoitus = lupa.maaraykset | filterMaarays(["kohde:tarkoitus"]) %}
+        {% if aOppilaitoksenTarkoitus is notBlank %}
+        <div class="otsikko">Oppilaitoksen tarkoitus</div>
+        <div class="sisalto">
+            {% include fromDefault("maaraykset_metatiedot") with
+              { "avain": "oppilaitoksentarkoitus",
+                "maaraykset": aOppilaitoksenTarkoitus
+              }
+            %}
+        </div>
+        {% endif %}
+    </div>
+
+   <!-- Oppilaitoksen koulutustehtävä -->
+    <div class="if">
+        {% set aOppilaitoksenKoulutustehtavat = lupa.maaraykset | filterMaarays(["kohde:koulutustehtava"]) %}
+        {% if aOppilaitoksenKoulutustehtavat is notBlank %}
+            <div class="otsikko">Oppilaitoksen koulutustehtävä</div>
+            <div class="sisalto">
+                {% include fromDefault("maaraykset_metatiedot") with
+                    { "avain": "koulutustehtävämääräys",
+                      "maaraykset": aOppilaitoksenKoulutustehtavat
+                    }
+                %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Erityinen koulutustehtävä -->
+    <div class="if">
+        {% set aErityiskoulutustehtavaMaaraykset = lupa.maaraykset | filterMaarays(["kohde:erityinenkoulutustehtava"]) %}
+        {% if aErityiskoulutustehtavaMaaraykset is notBlank %}
+            <div class="otsikko">Erityinen koulutustehtävä</div>
+            <div class="sisalto">
+                {% include fromDefault("maaraykset_metatiedot") with
+                    { "avain": "erityinenkoulutustehtävämääräys",
+                      "maaraykset": aErityiskoulutustehtavaMaaraykset
+                    }
+                %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Muut koulutuksen järjestämiseen liittyvät ehdot -->
+    <div class="if">
+        {% set maaraykset = lupa.maaraykset | filterMaarays(["koodisto:kujamuutoikeudetmaarayksetjarajoitukset"]) %}
+        {% if maaraykset is notBlank %}
+        <div class="otsikko">Muut koulutuksen järjestämiseen liittyvät ehdot</div>
+        <div class="sisalto">
+            {% include fromDefault("maaraykset_metatiedot") with
+                {
+                    "maaraykset": maaraykset,
+                    "avain": "urn:muumääräys"
+                }
+            %}
+        </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<div class="maaraykset sisennys">
+    {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
+        <span class="data loop {{ maarays | htmlClass }}">{{ maarays.koodi.nimi | translated | comma }}</span>
+    {% endfor %}
+</div>

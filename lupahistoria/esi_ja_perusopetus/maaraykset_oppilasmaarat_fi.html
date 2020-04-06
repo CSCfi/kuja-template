@@ -1,0 +1,7 @@
+<div class="maaraykset sisennys">
+    {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
+    <div class="data loop {{ maarays | htmlClass }}">
+            {{maarays.arvo}}, {{maarays.meta | fieldvalue("oppilaitosmääräys-2")}}
+    </div>
+    {% endfor %}
+</div>
