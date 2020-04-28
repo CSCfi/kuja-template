@@ -54,7 +54,7 @@
 
     <!-- Opetuksen järjestämismuoto -->
     <div class="if">
-        {% set aKoulutuksenJarjestajamismuodot = lupa.maaraykset | filterMaarays(["koodisto:kujamuutoikeudetmaarayksetjarajoitukset"]) %}
+        {% set aKoulutuksenJarjestajamismuodot = lupa.maaraykset | filterMaarays(["koodisto:opetuksenjarjestamismuoto"]) %}
         {% if aKoulutuksenJarjestajamismuodot is notBlank %}
             <div class="otsikko">Opetuksen järjestämismuoto</div>
             <div class="sisalto">
@@ -92,16 +92,22 @@
 
     <!-- Oppilasmäärä -->
     <div class="if">
-        {% set aOppilasmaarat = lupa.maaraykset | filterMaarays(["koodisto:koulutussektori"]) %}
+        {% set aOppilasmaarat = lupa.maaraykset | filterMaarays(["kohde:opiskelijamaara"]) %}
         {% if aOppilasmaarat is notBlank %}
             <div class="otsikko">Oppilas- / opiskelijamäärä</div>
             <div class="sisalto">
                 <div class="maaraykset sisennys">
                     <div class="data">
                         {% include fromContext("maaraykset_oppilasmaarat") with
-                        { "maaraykset": aOppilasmaarat }
+                        { "maaraykset": aOppilasmaarat | filterMaarays(["koodisto:kujalisamaareet"]) }
                         %}
                     </div>
+                    {% include fromDefault("maaraykset_metatiedot") with
+                    {
+                        "avain": "oppilaitosmääräys",
+                        "maaraykset": aOppilasmaarat | filterMaarays(["koodisto:koulutussektori"])
+                    }
+                    %}
                 </div>
             </div>
         {% endif %}
