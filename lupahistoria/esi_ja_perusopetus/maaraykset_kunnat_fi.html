@@ -1,9 +1,14 @@
-<div class="maaraykset sisennys">
-    {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
-        {% if maarays.koodisto == "nuts1" %}
-            <span class="data loop {{ maarays | htmlClass }}">{{ maarays.meta | fieldvalue("urn:oppilaitosmääräys-2") | comma }}</span>
-        {% else %}
-            <span class="data loop {{ maarays | htmlClass }}">{{ maarays.koodi.nimi | translated | comma }}</span>
-        {% endif %}
+{% for maarays in maaraykset | sortMaarays("koodiarvo") %}
+<div class="sisennys">
+    {% if maarays.koodisto == "nuts1" %}
+    <span class="data loop {{ maarays | htmlClass }}">{{ maarays.meta | fieldvalue("urn:oppilaitosmääräys-2")}}</span>
+    {% else %}
+    <span class="data loop {{ maarays | htmlClass }}">{{ maarays.koodi.nimi | translated}}</span>
+    {% endif %}
+    {% for aliMaarays in maarays.alimaaraykset %}
+    <div class="sisennys">
+        <span class="data loop {{ maarays | htmlClass }}">{{ aliMaarays.koodi.nimi | translated }}</span>
+    </div>
     {% endfor %}
 </div>
+{% endfor %}

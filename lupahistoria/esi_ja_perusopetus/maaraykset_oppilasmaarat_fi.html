@@ -1,7 +1,13 @@
-<div class="maaraykset sisennys">
-    {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
+{% for maarays in maaraykset | sortMaarays("koodiarvo") %}
+<div class="sisennys">
     <div class="data loop {{ maarays | htmlClass }}">
-            {{maarays.arvo}}, {{maarays.meta | fieldvalue("oppilaitosmääräys-2")}}
+            {{ maarays.koodi.nimi | translated }} {{ maarays.arvo }}
     </div>
-    {% endfor %}
+    {% include fromContext("ali_maaraykset") with
+    {
+        "aliMaaraykset": maarays.aliMaaraykset,
+        "class": "sisennys"
+    }
+    %}
 </div>
+{% endfor %}

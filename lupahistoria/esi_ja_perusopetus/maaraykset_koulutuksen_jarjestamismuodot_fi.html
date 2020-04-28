@@ -1,6 +1,6 @@
 <div class="maaraykset sisennys">
     {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
-        <span class="data loop {{ maarays | htmlClass }}">{{ maarays.meta | fieldvalue("urn:muumääräys-0") | comma }}</span>
+        <span class="data loop {{ maarays | htmlClass }}">{{ maarays.koodi.kuvaus | translated | comma }}</span>
     {% endfor %}
 </div>
 
