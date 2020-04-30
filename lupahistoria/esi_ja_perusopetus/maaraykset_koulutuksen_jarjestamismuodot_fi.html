@@ -2,6 +2,11 @@
     {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
         <span class="data loop {{ maarays | htmlClass }}">{{ maarays.koodi.kuvaus | translated | comma }}</span>
     {% endfor %}
+    {% for aliMaarays in maarays.alimaaraykset %}
+    <div class="sisennys">
+        <span class="data loop {{ maarays | htmlClass }}">{{ aliMaarays.koodi.nimi | translated }}</span>
+    </div>
+    {% endfor %}
 </div>
 
 
