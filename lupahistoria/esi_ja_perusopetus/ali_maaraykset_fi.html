@@ -1,0 +1,16 @@
+{% for aliMaarays in aliMaaraykset %}
+<div class="{{class}}">
+    <span class="data loop {{ maarays | htmlClass }}">{{ aliMaarays.koodi.nimi | translated }} {{ aliMaarays.arvo }}</span>
+    {% if aliMaarays.koodisto == "kujalisamaareet" and aliMaarays.koodi.koodiArvo == "3" %}
+    <span class="data loop {{ maarays | htmlClass }}">{{ aliMaarays.meta | fieldvalue("urn:aikamääräys-0")}} - {{ aliMaarays.meta | fieldvalue("urn:aikamääräys-1")}}</span>
+    {% endif %}
+    {% if aliMaarays.aliMaaraykset is not empty %}
+        {% include fromContext("ali_maaraykset") with
+        {
+            "aliMaaraykset": aliMaarays.aliMaaraykset,
+            "class": ""
+        }
+        %}
+    {% endif %}
+</div>
+{% endfor %}

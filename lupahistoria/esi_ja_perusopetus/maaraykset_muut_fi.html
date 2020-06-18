@@ -1,6 +1,10 @@
 <div class="maaraykset sisennys">
     {% for maarays in maaraykset | sortMaarays("koodiarvo") %}
     <span class="data loop {{ maarays | htmlClass }}">{{ maarays.meta | fieldvalue("urn:muumääräys-0") | comma }}</span>
-    <span class="data loop {{ maarays | htmlClass }}">{{ maarays.meta | fieldvalue("koulutustehtävämääräys-2") | comma }}</span>
+    {% endfor %}
+    {% for aliMaarays in maarays.alimaaraykset %}
+    <div class="sisennys">
+        <span class="data loop {{ maarays | htmlClass }}">{{ aliMaarays.koodi.nimi | translated }}</span>
+    </div>
     {% endfor %}
 </div>
